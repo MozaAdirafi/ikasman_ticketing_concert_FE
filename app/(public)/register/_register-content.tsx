@@ -70,10 +70,17 @@ export function RegisterContent() {
 
     createOrder(payload as any, {
       onSuccess: (order) => {
-        // Store order with cart context
+        // Store cart and order details in localStorage for after payment
         localStorage.setItem('currentOrder', JSON.stringify(order))
         localStorage.setItem('orderCart', JSON.stringify(cartItems))
-        router.push(`/checkout?order_id=${order.order_id}`)
+
+        // Redirect to Midtrans SNAP payment page
+        if (order.payment_url) {
+          window.location.href = order.payment_url
+        } else {
+          // Fallback if payment_url is missing
+          setToast('Payment URL not received. Please try again.')
+        }
       },
       onError: (err) => {
         setToast(err.message)
