@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0f1729;
+  --color-navy-light: #162236;
+  --color-navy-muted: #1e2e4a;
+  --color-gold: #fbbf24;
+  --color-gold-dim: #d97706;
+  --color-gold-pale: #fef3c7;
+  --color-cream: #f9fafb;
+  --color-cream-muted: #e5e7eb;
+
+  --font-display: "Poppins", "Inter", sans-serif;
+  --font-body: Georgia, "Lora", serif;
+  --font-ui: "Inter", sans-serif;
+
+  --shadow-ticket: 0 4px 24px 0 rgba(251, 191, 36, 0.08);
+  --shadow-ticket-hover: 0 12px 40px 0 rgba(251, 191, 36, 0.28);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0f1729;
+  color: #f9fafb;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", "Inter", sans-serif;
+  font-weight: 700;
+}
+
+/* Ticket perforation dots */
+.ticket-perforation {
+  background-image: radial-gradient(circle, #0f1729 3px, transparent 3px);
+  background-size: 14px 14px;
+  background-position: center;
+}
+
+/* Gold gradient border via outline trick */
+.border-gold-gradient {
+  border: 1.5px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.border-gold-gradient::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 50%, #fbbf24 100%);
+  z-index: -1;
+}
+
+/* Ticket hover glow */
+.ticket-glow:hover {
+  box-shadow:
+    0 12px 40px 0 rgba(251, 191, 36, 0.28),
+    0 0 0 1px rgba(251, 191, 36, 0.15);
+}
+
+/* Payment success pulse */
+@keyframes success-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+}
+
+.animate-success-pulse {
+  animation: success-pulse 1.8s ease-in-out 2;
+}
+
+/* Scanline for QR scanner overlay */
+@keyframes scanline {
+  0% {
+    top: 8%;
+  }
+  50% {
+    top: 88%;
+  }
+  100% {
+    top: 8%;
+  }
+}
+
+.animate-scanline {
+  animation: scanline 2.4s ease-in-out infinite;
+}
+
+/* Modal slide up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
