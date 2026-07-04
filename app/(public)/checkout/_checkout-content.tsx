@@ -53,7 +53,7 @@ export function CheckoutContent() {
             <span className="text-gold text-2xl">✓</span>
           </div>
           <h1 className="font-display text-2xl font-800 text-cream mb-3">
-            You're in.
+            You are in.
           </h1>
           <p className="text-cream/60 text-sm" style={{ fontFamily: 'Georgia, serif' }}>
             Your e-tickets are on the way to your inbox.

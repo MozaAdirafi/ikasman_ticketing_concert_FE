@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { registrationSchema, type RegistrationFormValues } from '@/lib/validations'
+import { SERVICE_FEE, addServiceFee } from '@/lib/pricing'
 import { useCreateOrder } from '@/hooks/useCreateOrder'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
@@ -56,9 +57,13 @@ export function RegisterContent() {
 
   // Calculate totals
   const totalTickets = cartItems.reduce((sum, item) => sum + item.quantity, 0)
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.ticket.price * item.quantity, 0)
+  const subtotal = cartItems.reduce((sum, item) => sum + item.ticket.price * item.quantity, 0)
+  const totalPrice = addServiceFee(subtotal)
 
   function onSubmit(values: RegistrationFormValues) {
+    const subtotal = cartItems.reduce((sum, item) => sum + item.ticket.price * item.quantity, 0)
+    const total = addServiceFee(subtotal)
+
     // Send all cart items to backend
     const payload = {
       ...values,
@@ -66,6 +71,10 @@ export function RegisterContent() {
         ticket_id: item.ticket.id,
         quantity: item.quantity,
       })),
+      service_fee: SERVICE_FEE,
+      subtotal,
+      total_amount: total,
+      gross_amount: total,
     }
 
     createOrder(payload as any, {
@@ -129,7 +138,19 @@ export function RegisterContent() {
               ))}
             </div>
             <div className="flex justify-between items-center">
-              <span className="font-display font-700 text-cream/70">Total ({totalTickets} tickets)</span>
+              <span className="font-display font-700 text-cream/70">Subtotal ({totalTickets} tickets)</span>
+              <span className="font-display text-lg font-800 text-cream">
+                {formatPrice(subtotal)}
+              </span>
+            </div>
+            <div className="flex justify-between items-center mt-2">
+              <span className="font-display font-700 text-cream/70">Service Fee</span>
+              <span className="font-display text-lg font-800 text-cream">
+                {formatPrice(SERVICE_FEE)}
+              </span>
+            </div>
+            <div className="flex justify-between items-center mt-2">
+              <span className="font-display font-700 text-cream/70">Total</span>
               <span className="font-display text-2xl font-900 text-gold">
                 {formatPrice(totalPrice)}
               </span>

@@ -2,6 +2,7 @@
 
 import type { OrderResponse } from '@/types'
 import type { CartItem } from '@/components/ticket/MinimalTicketCard'
+import { SERVICE_FEE, addServiceFee } from '@/lib/pricing'
 
 interface OrderSummaryProps {
   order?: OrderResponse
@@ -37,7 +38,8 @@ export function OrderSummary({ order, loading, cartItems = [] }: OrderSummaryPro
 
   // Show cart items if available
   if (cartItems && cartItems.length > 0) {
-    const cartTotal = cartItems.reduce((sum, item) => sum + item.ticket.price * item.quantity, 0)
+    const subtotal = cartItems.reduce((sum, item) => sum + item.ticket.price * item.quantity, 0)
+    const cartTotal = addServiceFee(subtotal)
     return (
       <div className="border border-cream/10 bg-navy-light p-5">
         <p className="font-ui text-xs uppercase tracking-[0.15em] text-cream/40 mb-4">
@@ -59,6 +61,12 @@ export function OrderSummary({ order, loading, cartItems = [] }: OrderSummaryPro
               </p>
             </div>
           ))}
+        </div>
+        <div className="flex justify-between items-center mb-3">
+          <span className="font-ui text-sm text-cream/70">Service Fee</span>
+          <span className="font-display text-sm font-700 text-cream">
+            {formatPrice(SERVICE_FEE)}
+          </span>
         </div>
         <div className="flex justify-between items-center">
           <span className="font-ui text-sm text-cream/70">Total</span>

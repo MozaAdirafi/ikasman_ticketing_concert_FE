@@ -2,6 +2,52 @@
 
 import type { Ticket } from '@/types'
 
+// ---- tier config ----
+type TierConfig = {
+  borderColor: string
+  badgeBg: string
+  badgeColor: string
+  badgeBorder: string
+  dropdownBorderColor: string
+}
+
+function getTierConfig(tier: string): TierConfig {
+  switch (tier.toUpperCase()) {
+    case 'PLATINUM':
+      return {
+        borderColor: '#FBBF24',
+        badgeBg: 'rgba(251,191,36,0.15)',
+        badgeColor: '#FBBF24',
+        badgeBorder: '1px solid rgba(251,191,36,0.3)',
+        dropdownBorderColor: '#FBBF24',
+      }
+    case 'GOLD':
+      return {
+        borderColor: '#F97316',
+        badgeBg: 'rgba(249,115,22,0.15)',
+        badgeColor: '#F97316',
+        badgeBorder: '1px solid rgba(249,115,22,0.3)',
+        dropdownBorderColor: '#F97316',
+      }
+    case 'SILVER':
+      return {
+        borderColor: '#94A3B8',
+        badgeBg: 'rgba(148,163,184,0.15)',
+        badgeColor: '#94A3B8',
+        badgeBorder: '1px solid rgba(148,163,184,0.3)',
+        dropdownBorderColor: '#94A3B8',
+      }
+    default:
+      return {
+        borderColor: '#334155',
+        badgeBg: 'rgba(51,65,85,0.15)',
+        badgeColor: '#94A3B8',
+        badgeBorder: '1px solid rgba(51,65,85,0.3)',
+        dropdownBorderColor: '#475569',
+      }
+  }
+}
+
 export interface CartItem {
   ticket: Ticket
   quantity: number
@@ -11,14 +57,6 @@ interface MinimalTicketCardProps {
   ticket: Ticket
   quantity: number
   onQuantityChange: (quantity: number) => void
-}
-
-const TIER_COLORS = {
-  PLATINUM: { badge: '', color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
-  GOLD: { badge: '', color: 'text-amber-300', bg: 'bg-amber-500/10' },
-  SILVER: { badge: '', color: 'text-slate-300', bg: 'bg-slate-500/10' },
-  VIP: { badge: '', color: 'text-purple-300', bg: 'bg-purple-500/10' },
-  REGULAR: { badge: '', color: 'text-gray-300', bg: 'bg-gray-500/10' },
 }
 
 function formatPrice(price: number) {
@@ -33,88 +71,94 @@ function formatPrice(price: number) {
 }
 
 export function MinimalTicketCard({ ticket, quantity, onQuantityChange }: MinimalTicketCardProps) {
-  const tierKey = (ticket.tier ?? 'REGULAR') as keyof typeof TIER_COLORS
-  const tierConfig = TIER_COLORS[tierKey]
+  const tier = ticket.tier ?? 'REGULAR'
+  const config = getTierConfig(tier)
   const soldOut = ticket.stock === 0
-
   const quantities = Array.from({ length: Math.min(10, ticket.stock) }, (_, i) => i + 1)
 
   return (
     <div
-      className="
-        border border-white/10 rounded-lg p-6 backdrop-blur-sm
-        transition-all duration-200 hover:border-white/20
-        bg-gradient-to-br from-white/5 to-transparent
-      "
+      className="w-full rounded-lg border border-white/10 bg-[#131929] hover:bg-[#1a2235] transition-colors duration-200"
+      style={{ borderLeft: `3px solid ${config.borderColor}`, minHeight: '80px' }}
     >
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-        {/* Left: Info */}
-        <div className="flex-1 min-w-0">
-          {/* Tier badge */}
-          <div className="flex items-center gap-2 mb-3">
-            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded text-sm font-display font-700 uppercase tracking-wide ${tierConfig.bg} ${tierConfig.color}`}>
-              <span>{tierConfig.badge}</span>
-              {ticket.name}
-            </span>
-          </div>
+      <div style={{ display: 'flex', alignItems: 'stretch', minHeight: '80px' }}>
 
-          {/* Description */}
-          {ticket.description && (
-            <p className="text-sm text-gray-300 mb-3 leading-relaxed">
-              {ticket.description}
-            </p>
-          )}
-
-          {/* Price + Availability */}
-          <div className="flex items-baseline justify-between md:justify-start md:gap-4">
-            <div>
-              <span className="text-xs text-gray-400 font-ui uppercase tracking-wide">Price</span>
-              <p className="font-display text-2xl font-800 text-white">
-                {formatPrice(ticket.price)}
-              </p>
-            </div>
-
-            {!soldOut && ticket.stock <= 5 && (
-              <div className="text-xs text-orange-400 font-semibold uppercase tracking-wide">
-                Only {ticket.stock} left
-              </div>
-            )}
-          </div>
+        {/* LEFT: badge + price */}
+        <div style={{ flex: 1, padding: '20px 0 20px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '8px' }}>
+          <span
+            className="text-xs font-bold uppercase tracking-wide w-fit rounded"
+            style={{
+              background: config.badgeBg,
+              color: config.badgeColor,
+              border: config.badgeBorder,
+              padding: '2px 10px',
+            }}
+          >
+            {ticket.name.toUpperCase()}
+          </span>
+          <p className="text-white font-bold leading-tight" style={{ fontSize: '22px' }}>
+            {formatPrice(ticket.price)}
+          </p>
         </div>
 
-        {/* Right: Quantity selector */}
-        <div className="flex items-center gap-3 md:justify-end">
-          {soldOut ? (
-            <div className="text-xs text-red-400 font-semibold uppercase tracking-wide">
-              Sold Out
-            </div>
-          ) : (
-            <select
-              value={quantity}
-              onChange={(e) => onQuantityChange(Number(e.target.value))}
-              className="
-                bg-navy-light border border-white/20 text-white
-                px-4 py-2.5 rounded font-ui font-600 text-sm
-                focus:outline-none focus:border-yellow-400
-                transition-colors cursor-pointer appearance-none
-                pr-8
-              "
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f3f4f6' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right 8px center',
-                paddingRight: '32px',
-              }}
-            >
-              <option value={0}>Select qty</option>
-              {quantities.map((q) => (
-                <option key={q} value={q}>
-                  {q} ticket{q > 1 ? 's' : ''}
-                </option>
-              ))}
-            </select>
-          )}
+        {/* Ticket tear-off divider with semicircle cutouts */}
+        <div
+          style={{
+            position: 'relative',
+            width: '0',
+            borderLeft: '2px dashed rgba(255,255,255,0.12)',
+            margin: '0 24px',
+            flexShrink: 0,
+          }}
+        >
+          <div style={{
+            position: 'absolute',
+            top: '-1px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '16px',
+            height: '8px',
+            borderRadius: '0 0 8px 8px',
+            background: '#0F1729',
+            zIndex: 2,
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '-1px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '16px',
+            height: '8px',
+            borderRadius: '8px 8px 0 0',
+            background: '#0F1729',
+            zIndex: 2,
+          }} />
         </div>
+
+        {/* RIGHT: dropdown */}
+        <div style={{ width: '160px', padding: '20px 24px 20px 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <select
+            value={quantity}
+            onChange={(e) => onQuantityChange(Number(e.target.value))}
+            disabled={soldOut}
+            className="text-white text-sm font-medium rounded focus:outline-none transition-colors cursor-pointer appearance-none disabled:opacity-60 disabled:cursor-not-allowed"
+            style={{
+              background: '#162236',
+              border: `1px solid ${config.dropdownBorderColor}`,
+              padding: '8px 32px 8px 12px',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f3f4f6' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 8px center',
+              width: '100%',
+            }}
+          >
+            <option value={0}>{soldOut ? 'Sold Out' : 'Pilih Jumlah'}</option>
+            {!soldOut && quantities.map((q) => (
+              <option key={q} value={q}>{q} ticket{q > 1 ? 's' : ''}</option>
+            ))}
+          </select>
+        </div>
+
       </div>
     </div>
   )

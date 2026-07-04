@@ -1,5 +1,6 @@
 'use client'
 
+import { SERVICE_FEE } from '@/lib/pricing'
 import type { CartItem } from './MinimalTicketCard'
 
 interface OrderDetailModalProps {
@@ -23,8 +24,7 @@ export function OrderDetailModal({ items, isOpen, onClose }: OrderDetailModalPro
   if (!isOpen) return null
 
   const subtotal = items.reduce((sum, item) => sum + item.ticket.price * item.quantity, 0)
-  const serviceFee = 10000 // Example fee
-  const total = subtotal + serviceFee
+  const total = subtotal + SERVICE_FEE
 
   return (
     <>
@@ -84,7 +84,7 @@ export function OrderDetailModal({ items, isOpen, onClose }: OrderDetailModalPro
             </div>
             <div className="flex justify-between text-sm text-gray-300">
               <span>Service Fee</span>
-              <span>{formatPrice(serviceFee)}</span>
+              <span>{formatPrice(SERVICE_FEE)}</span>
             </div>
           </div>
 
