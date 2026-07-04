@@ -60,30 +60,26 @@ export default function LandingPage() {
         />
 
         {/* Content row */}
-        <div
-          className="relative z-10 flex flex-row items-center"
-          style={{ padding: '40px', gap: '40px' }}
-        >
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-10 px-5 py-6 md:p-10">
           {/* LEFT — event info */}
-          <div style={{ flex: 1, minWidth: 0, paddingRight: '40px' }}>
+          <div className="flex-1 min-w-0 md:pr-10">
             <p
               style={{
                 color: '#FBBF24',
-                fontSize: '11px',
                 fontWeight: 500,
                 textTransform: 'uppercase',
                 letterSpacing: '0.15em',
                 marginBottom: '12px',
               }}
+              className="text-[10px] md:text-[11px]"
             >
-              Live Concert
+              LIVE CONCERT
             </p>
 
             <h1
-              className="font-display"
+              className="font-display text-[36px] md:text-[64px]"
               style={{
                 color: '#ffffff',
-                fontSize: '64px',
                 fontWeight: 700,
                 lineHeight: 1.0,
                 marginBottom: '4px',
@@ -93,10 +89,9 @@ export default function LandingPage() {
               Kirribilly
             </h1>
             <p
-              className="font-display"
+              className="font-display text-[24px] md:text-[40px]"
               style={{
                 color: '#FBBF24',
-                fontSize: '40px',
                 fontWeight: 700,
                 lineHeight: 1.1,
                 marginBottom: '24px',
@@ -107,15 +102,15 @@ export default function LandingPage() {
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <div className="flex items-center gap-3" style={{ color: '#CBD5E1', fontSize: '15px' }}>
+              <div className="flex items-start gap-3 text-[13px] md:text-[15px]" style={{ color: '#CBD5E1' }}>
                 <IconCalendar size={16} strokeWidth={1.6} style={{ flexShrink: 0 }} />
                 <span>Kamis, 30 Juli 2026 · 19:30 – 22:00 WIB</span>
               </div>
-              <div className="flex items-center gap-3" style={{ color: '#CBD5E1', fontSize: '15px' }}>
+              <div className="flex items-start gap-3 text-[13px] md:text-[15px]" style={{ color: '#CBD5E1' }}>
                 <IconMapPin size={16} strokeWidth={1.6} style={{ flexShrink: 0 }} />
                 <span>Deheng House, Jl. Taman Kemang No.32, Jakarta Selatan</span>
               </div>
-              <div className="flex items-center gap-3" style={{ color: '#CBD5E1', fontSize: '15px' }}>
+              <div className="flex items-start gap-3 text-[13px] md:text-[15px]" style={{ color: '#CBD5E1' }}>
                 <IconUser size={16} strokeWidth={1.6} style={{ flexShrink: 0 }} />
                 <span>Feat. Cakra Khan & Astrid</span>
               </div>
@@ -123,7 +118,7 @@ export default function LandingPage() {
           </div>
 
           {/* RIGHT — poster image */}
-          <div style={{ width: '420px', flexShrink: 0 }}>
+          <div className="hidden md:block" style={{ width: '420px', flexShrink: 0 }}>
             <div style={{ cursor: 'pointer' }} onClick={() => setShowPoster(true)}>
               <div
                 style={{
@@ -152,7 +147,7 @@ export default function LandingPage() {
       <div style={{ height: '1px', background: '#FBBF24', width: '100%' }} />
 
       {/* Tickets section */}
-      <section className="w-full" style={{ padding: '48px 24px' }}>
+      <section className="w-full px-4 py-6 md:px-6 md:py-12">
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <div style={{ marginBottom: '24px' }}>
             <h2 className="font-display text-white font-semibold" style={{ fontSize: '18px' }}>Pilih Tiket</h2>
@@ -169,7 +164,7 @@ export default function LandingPage() {
             </div>
           ) : error ? (
             <div className="border border-red-500/30 bg-red-950/20 rounded-lg p-8 text-center">
-              <p className="text-red-400 font-ui">Could not load tickets. Please refresh.</p>
+              <p className="text-red-400 font-ui">Gagal memuat tiket. Silakan muat ulang halaman.</p>
             </div>
           ) : tickets && tickets.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -189,14 +184,14 @@ export default function LandingPage() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <p className="text-gray-400 font-ui">No tickets available</p>
+              <p className="text-gray-400 font-ui">Tiket belum tersedia</p>
             </div>
           )}
         </div>
       </section>
 
       {/* Event description */}
-      <section style={{ padding: '0 24px 48px' }}>
+      <section className="px-4 pb-12 md:px-6" style={{ paddingTop: 0 }}>
         <div
           style={{
             maxWidth: '860px',
@@ -204,9 +199,10 @@ export default function LandingPage() {
             borderTop: '1px solid #1e2640',
             paddingTop: '32px',
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
+            gridTemplateColumns: '1fr',
             gap: '48px',
           }}
+          className="md:[grid-template-columns:1fr_1fr]"
         >
           {/* Left: about */}
           <div>

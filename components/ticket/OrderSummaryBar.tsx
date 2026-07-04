@@ -43,20 +43,20 @@ export function OrderSummaryBar({ items, onViewDetail }: OrderSummaryBarProps) {
       className={`fixed bottom-0 left-0 right-0 transition-all duration-300 transform z-40 ${hasItems ? 'translate-y-0' : 'translate-y-full'}`}
       style={{ background: '#0a0e1a', borderTop: '1px solid #1e2640' }}
     >
-      <div style={{ padding: '16px 60px' }}>
-        <div className="flex items-center justify-between gap-4 md:gap-6">
+      <div className="px-4 py-3 md:px-[60px] md:py-4">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-6">
           {/* Left: Summary */}
           <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide font-ui mb-1">
-              Total ({totalQuantity} ticket{totalQuantity !== 1 ? 's' : ''} + service fee)
+            <p className="text-[11px] md:text-xs text-gray-400 uppercase tracking-wide font-ui mb-1">
+              Total ({totalQuantity} tiket + biaya layanan)
             </p>
-            <p className="font-display text-2xl md:text-3xl font-800 text-white">
+            <p className="font-display text-[14px] md:text-3xl font-800 text-white leading-tight">
               {formatPrice(totalWithFee)}
             </p>
           </div>
 
           {/* Right: Actions */}
-          <div className="flex items-center gap-3 md:gap-4 ml-auto">
+          <div className="flex w-full md:w-auto items-center gap-3 md:gap-4 md:ml-auto">
             <button
               onClick={onViewDetail}
               className="
@@ -65,14 +65,14 @@ export function OrderSummaryBar({ items, onViewDetail }: OrderSummaryBarProps) {
                 hidden md:block
               "
             >
-              View Detail
+              Lihat Detail
             </button>
 
             <button
               onClick={handleOrderNow}
               disabled={!hasItems}
               className={`
-                px-8 py-3 rounded font-display font-800 uppercase tracking-wider
+                w-full md:w-auto px-8 py-3 rounded font-display font-800 uppercase tracking-wider
                 transition-all duration-200 text-sm md:text-base whitespace-nowrap
                 ${
                   hasItems
@@ -81,7 +81,7 @@ export function OrderSummaryBar({ items, onViewDetail }: OrderSummaryBarProps) {
                 }
               `}
             >
-              Order Now
+              Pesan Sekarang
             </button>
           </div>
         </div>

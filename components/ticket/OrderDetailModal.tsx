@@ -46,7 +46,7 @@ export function OrderDetailModal({ items, isOpen, onClose }: OrderDetailModalPro
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-display text-xl font-800 text-white">Order Details</h2>
+            <h2 className="font-display text-xl font-800 text-white">Detail Pesanan</h2>
             <button
               onClick={onClose}
               className="text-2xl text-gray-400 hover:text-white transition-colors"
@@ -65,7 +65,7 @@ export function OrderDetailModal({ items, isOpen, onClose }: OrderDetailModalPro
                       {item.ticket.name} <span className="text-gray-400">×{item.quantity}</span>
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
-                      {formatPrice(item.ticket.price)} each
+                      {formatPrice(item.ticket.price)} per tiket
                     </p>
                   </div>
                   <p className="font-display font-800 text-yellow-400">
@@ -83,7 +83,7 @@ export function OrderDetailModal({ items, isOpen, onClose }: OrderDetailModalPro
               <span>{formatPrice(subtotal)}</span>
             </div>
             <div className="flex justify-between text-sm text-gray-300">
-              <span>Service Fee</span>
+              <span>Biaya Layanan</span>
               <span>{formatPrice(SERVICE_FEE)}</span>
             </div>
           </div>
@@ -105,7 +105,7 @@ export function OrderDetailModal({ items, isOpen, onClose }: OrderDetailModalPro
               rounded transition-colors
             "
           >
-            Close
+            Tutup
           </button>
         </div>
       </div>

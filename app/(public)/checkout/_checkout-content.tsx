@@ -1,44 +1,39 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { usePaymentStatus } from '@/hooks/usePaymentStatus'
 import { Button } from '@/components/ui/Button'
 import { OrderSummary } from '@/components/checkout/OrderSummary'
-import { PaymentMethodBadge } from '@/components/checkout/PaymentMethodBadge'
-import type { OrderResponse, PaymentMethod } from '@/types'
+import type { OrderResponse } from '@/types'
 
 export function CheckoutContent() {
   const router = useRouter()
   const params = useSearchParams()
   const orderId = params.get('order_id')
 
-  const [method, setMethod] = useState<PaymentMethod>('QRIS')
-  const [order, setOrder] = useState<OrderResponse | undefined>()
-  const [orderLoading, setOrderLoading] = useState(true)
-  const { data: payment, isLoading: paymentLoading } = usePaymentStatus(orderId)
+  const [order] = useState<OrderResponse | undefined>(() => {
+    if (typeof window === 'undefined') return undefined
 
-  // Load order from localStorage on mount
-  useEffect(() => {
     const stored = localStorage.getItem('currentOrder')
-    if (stored) {
-      try {
-        const data = JSON.parse(stored) as OrderResponse
-        setOrder(data)
-      } catch {
-        console.error('Failed to parse order from localStorage')
-      }
+    if (!stored) return undefined
+
+    try {
+      return JSON.parse(stored) as OrderResponse
+    } catch {
+      console.error('Gagal membaca data pesanan dari localStorage')
+      return undefined
     }
-    setOrderLoading(false)
-  }, [])
+  })
+  const { data: payment, isLoading: paymentLoading } = usePaymentStatus(orderId)
 
   if (!orderId) {
     return (
       <main className="min-h-screen bg-navy flex items-center justify-center px-5">
         <div className="text-center">
-          <p className="text-cream/50 font-ui mb-4">No order found.</p>
+          <p className="text-cream/50 font-ui mb-4">Pesanan tidak ditemukan.</p>
           <Button variant="ghost" onClick={() => router.push('/')}>
-            Back to tickets
+            Kembali ke beranda
           </Button>
         </div>
       </main>
@@ -53,13 +48,16 @@ export function CheckoutContent() {
             <span className="text-gold text-2xl">✓</span>
           </div>
           <h1 className="font-display text-2xl font-800 text-cream mb-3">
-            You are in.
+            Pembayaran berhasil.
           </h1>
           <p className="text-cream/60 text-sm" style={{ fontFamily: 'Georgia, serif' }}>
-            Your e-tickets are on the way to your inbox.
-            Check your email — and your spam folder just in case.
+            E-tiket sedang dikirim ke email Anda.
+            Cek inbox dan folder spam bila belum masuk.
           </p>
-          <p className="text-gold/60 text-xs mt-4 font-ui">Order #{orderId}</p>
+          <p className="text-gold/60 text-xs mt-4 font-ui">Pesanan #{orderId}</p>
+          <Button variant="ghost" onClick={() => router.push('/')} className="mt-6">
+            Pesan Lagi
+          </Button>
         </div>
       </main>
     )
@@ -73,13 +71,13 @@ export function CheckoutContent() {
             <span className="text-red-400 text-2xl">✕</span>
           </div>
           <h1 className="font-display text-2xl font-800 text-cream mb-3">
-            Payment failed.
+            Pembayaran gagal.
           </h1>
           <p className="text-cream/60 text-sm mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-            Something went wrong with your payment. No charge was made.
+            Terjadi kendala saat memproses pembayaran. Tidak ada biaya yang terpotong.
           </p>
           <Button variant="ghost" onClick={() => router.push('/')}>
-            Try again
+            Kembali ke beranda
           </Button>
         </div>
       </main>
@@ -89,43 +87,31 @@ export function CheckoutContent() {
   return (
     <main className="min-h-screen bg-navy flex flex-col">
       <header className="px-5 md:px-6 pt-10 pb-6 border-b border-cream/10">
-        <p className="font-ui text-xs uppercase tracking-[0.2em] text-gold mb-1">Step 2 of 2</p>
-        <h1 className="font-display text-2xl font-800 text-cream">Pay & Confirm</h1>
+        <p className="font-ui text-xs uppercase tracking-[0.2em] text-gold mb-1">Langkah 2 dari 2</p>
+        <h1 className="font-display text-2xl font-800 text-cream">Checkout</h1>
         <p className="text-cream/50 text-sm mt-2" style={{ fontFamily: 'Georgia, serif' }}>
-          Complete payment to receive your e-tickets.
+          Selesaikan pembayaran untuk menerima e-tiket Anda.
         </p>
       </header>
 
       <section className="flex-1 px-5 md:px-6 py-8 flex flex-col gap-6 max-w-lg mx-auto w-full">
-        <OrderSummary order={order} loading={orderLoading} />
-
-        <div>
-          <p className="font-ui text-xs uppercase tracking-[0.15em] text-cream/40 mb-3">
-            Payment Method
-          </p>
-          <div className="flex flex-col gap-2">
-            {(['QRIS', 'VIRTUAL_ACCOUNT', 'EWALLET'] as PaymentMethod[]).map((m) => (
-              <PaymentMethodBadge
-                key={m}
-                method={m}
-                selected={method === m}
-                onSelect={() => setMethod(m)}
-              />
-            ))}
-          </div>
-        </div>
+        <OrderSummary order={order} loading={false} />
 
         <div className="pt-2 border-t border-cream/10">
           {paymentLoading ? (
             <p className="text-cream/40 text-sm font-ui text-center py-4">
-              Waiting for payment…
+              Menunggu pembayaran…
             </p>
           ) : (
             <p className="text-cream/50 text-sm text-center font-ui">
-              Checking payment status automatically…
+              Status pembayaran dicek otomatis. Setelah bayar via Midtrans Snap, halaman ini akan ter-update.
             </p>
           )}
         </div>
+
+        <Button variant="ghost" onClick={() => router.push('/')}>
+          Pesan Tiket Lain
+        </Button>
       </section>
     </main>
   )

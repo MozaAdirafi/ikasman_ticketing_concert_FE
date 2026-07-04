@@ -84,7 +84,7 @@ export function MinimalTicketCard({ ticket, quantity, onQuantityChange }: Minima
       <div style={{ display: 'flex', alignItems: 'stretch', minHeight: '80px' }}>
 
         {/* LEFT: badge + price */}
-        <div style={{ flex: 1, padding: '20px 0 20px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '8px' }}>
+        <div className="flex-1 px-4 py-4 md:py-5 md:pl-6 md:pr-0 flex flex-col justify-center gap-2">
           <span
             className="text-xs font-bold uppercase tracking-wide w-fit rounded"
             style={{
@@ -96,18 +96,18 @@ export function MinimalTicketCard({ ticket, quantity, onQuantityChange }: Minima
           >
             {ticket.name.toUpperCase()}
           </span>
-          <p className="text-white font-bold leading-tight" style={{ fontSize: '22px' }}>
+          <p className="text-white font-bold leading-tight text-[20px] md:text-[22px]">
             {formatPrice(ticket.price)}
           </p>
         </div>
 
         {/* Ticket tear-off divider with semicircle cutouts */}
         <div
+          className="mx-3 md:mx-6"
           style={{
             position: 'relative',
             width: '0',
             borderLeft: '2px dashed rgba(255,255,255,0.12)',
-            margin: '0 24px',
             flexShrink: 0,
           }}
         >
@@ -136,25 +136,25 @@ export function MinimalTicketCard({ ticket, quantity, onQuantityChange }: Minima
         </div>
 
         {/* RIGHT: dropdown */}
-        <div style={{ width: '160px', padding: '20px 24px 20px 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="w-[132px] md:w-[160px] pr-4 py-4 md:pr-6 md:py-5 flex items-center justify-center">
           <select
             value={quantity}
             onChange={(e) => onQuantityChange(Number(e.target.value))}
             disabled={soldOut}
-            className="text-white text-sm font-medium rounded focus:outline-none transition-colors cursor-pointer appearance-none disabled:opacity-60 disabled:cursor-not-allowed"
+            className="text-white text-xs md:text-sm font-medium rounded focus:outline-none transition-colors cursor-pointer appearance-none disabled:opacity-60 disabled:cursor-not-allowed"
             style={{
               background: '#162236',
               border: `1px solid ${config.dropdownBorderColor}`,
-              padding: '8px 32px 8px 12px',
+              padding: '7px 28px 7px 10px',
               backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f3f4f6' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'right 8px center',
               width: '100%',
             }}
           >
-            <option value={0}>{soldOut ? 'Sold Out' : 'Pilih Jumlah'}</option>
+            <option value={0}>{soldOut ? 'Habis' : 'Pilih Jumlah'}</option>
             {!soldOut && quantities.map((q) => (
-              <option key={q} value={q}>{q} ticket{q > 1 ? 's' : ''}</option>
+              <option key={q} value={q}>{q} tiket</option>
             ))}
           </select>
         </div>

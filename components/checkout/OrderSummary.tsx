@@ -26,7 +26,7 @@ export function OrderSummary({ order, loading, cartItems = [] }: OrderSummaryPro
     return (
       <div className="border border-cream/10 bg-navy-light p-5 animate-pulse">
         <p className="font-ui text-xs uppercase tracking-[0.15em] text-cream/40 mb-3">
-          Order Summary
+          Ringkasan Pesanan
         </p>
         <div className="space-y-2">
           <div className="h-4 bg-navy rounded w-24" />
@@ -43,7 +43,7 @@ export function OrderSummary({ order, loading, cartItems = [] }: OrderSummaryPro
     return (
       <div className="border border-cream/10 bg-navy-light p-5">
         <p className="font-ui text-xs uppercase tracking-[0.15em] text-cream/40 mb-4">
-          Order Summary
+          Ringkasan Pesanan
         </p>
         <div className="space-y-3 mb-4 pb-4 border-b border-cream/10">
           {cartItems.map((item) => (
@@ -53,7 +53,7 @@ export function OrderSummary({ order, loading, cartItems = [] }: OrderSummaryPro
                   {item.ticket.name} <span className="text-cream/50">×{item.quantity}</span>
                 </p>
                 <p className="text-xs text-cream/50 mt-0.5">
-                  {formatPrice(item.ticket.price)} each
+                  {formatPrice(item.ticket.price)} per tiket
                 </p>
               </div>
               <p className="font-display font-700 text-gold">
@@ -83,7 +83,7 @@ export function OrderSummary({ order, loading, cartItems = [] }: OrderSummaryPro
     return (
       <div className="border border-cream/10 bg-navy-light p-5">
         <p className="font-ui text-xs uppercase tracking-[0.15em] text-cream/40 mb-3">
-          Order Summary
+          Ringkasan Pesanan
         </p>
         {order.ticket ? (
           <>
@@ -103,7 +103,7 @@ export function OrderSummary({ order, loading, cartItems = [] }: OrderSummaryPro
             </div>
           </>
         ) : (
-          <p className="text-cream/40 text-sm font-ui">No order data</p>
+          <p className="text-cream/40 text-sm font-ui">Data pesanan tidak tersedia</p>
         )}
       </div>
     )
@@ -111,7 +111,7 @@ export function OrderSummary({ order, loading, cartItems = [] }: OrderSummaryPro
 
   return (
     <div className="border border-cream/10 bg-navy-light p-5">
-      <p className="text-cream/40 text-sm font-ui">No order data</p>
+      <p className="text-cream/40 text-sm font-ui">Data pesanan tidak tersedia</p>
     </div>
   )
 }
