@@ -125,7 +125,7 @@ export function TicketCard({ ticket, onSelect }: TicketCardProps) {
 
             {/* Event details */}
             <p className="text-sm text-gray-300 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-              Saturday, 15 March 2025 · 19.00 WIB
+              Thursday, 30 July 2026 · 19.30 - 22.00 WIB
             </p>
 
             {/* Description */}
@@ -149,7 +149,7 @@ export function TicketCard({ ticket, onSelect }: TicketCardProps) {
             {/* Expandable details */}
             {expanded && !soldOut && (
               <div className="mt-4 pt-4 border-t border-white/5 space-y-2">
-                <p className="text-xs font-600 text-gray-300 uppercase tracking-wide mb-2">What's included:</p>
+                <p className="text-xs font-600 text-gray-300 uppercase tracking-wide mb-2">What is included:</p>
                 <ul className="space-y-1">
                   {benefits.map((benefit, i) => (
                     <li key={i} className="text-xs text-gray-400 flex items-center gap-2">

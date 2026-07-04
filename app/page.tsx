@@ -46,13 +46,13 @@ export default function LandingPage() {
         <h1 className="font-display text-5xl md:text-6xl font-900 text-white leading-[1.1] tracking-tight mb-2">
           Kirribilly
           <br />
-          <span className="text-yellow-400">Concert 2025</span>
+          <span className="text-yellow-400">Concert 2026</span>
         </h1>
         <p className="mt-6 text-gray-300 text-base md:text-lg" style={{ fontFamily: 'Georgia, serif' }}>
-          Saturday, 15 March 2025 · Jakarta Convention Center
+          Thursday, 30 July 2026 · Deheng House
         </p>
         <p className="text-gray-400 text-sm mt-2" style={{ fontFamily: 'Georgia, serif' }}>
-          Gates open 18.00 · Show starts 19.00 WIB
+          19.30 - 22.00 WIB
         </p>
       </section>
 
@@ -101,12 +101,6 @@ export default function LandingPage() {
         )}
       </section>
 
-      {/* Footer */}
-      <footer className="mt-auto pt-8 border-t border-white/10 text-center py-6">
-        <p className="text-gray-400 text-xs font-ui">
-          Powered by DOKU · 100% Secure Ticketing
-        </p>
-      </footer>
 
       {/* Order summary bar (sticky) */}
       <OrderSummaryBar items={cart} onViewDetail={() => setShowDetailModal(true)} />

@@ -14,11 +14,11 @@ interface MinimalTicketCardProps {
 }
 
 const TIER_COLORS = {
-  PLATINUM: { badge: '👑', color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
-  GOLD: { badge: '⭐', color: 'text-amber-300', bg: 'bg-amber-500/10' },
-  SILVER: { badge: '◆', color: 'text-slate-300', bg: 'bg-slate-500/10' },
-  VIP: { badge: '♦', color: 'text-purple-300', bg: 'bg-purple-500/10' },
-  REGULAR: { badge: '•', color: 'text-gray-300', bg: 'bg-gray-500/10' },
+  PLATINUM: { badge: '', color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
+  GOLD: { badge: '', color: 'text-amber-300', bg: 'bg-amber-500/10' },
+  SILVER: { badge: '', color: 'text-slate-300', bg: 'bg-slate-500/10' },
+  VIP: { badge: '', color: 'text-purple-300', bg: 'bg-purple-500/10' },
+  REGULAR: { badge: '', color: 'text-gray-300', bg: 'bg-gray-500/10' },
 }
 
 function formatPrice(price: number) {
