@@ -424,7 +424,7 @@ export default function AdminDashboardPage() {
               </tr>
             ) : (
               attendees.map((attendee, index) => (
-                <tr key={`${attendee.orderNumber}-${index}`} className="odd:bg-navy-light even:bg-navy-muted/40">
+                <tr key={`${attendee.order_id}-${index}`} className="odd:bg-navy-light even:bg-navy-muted/40">
                   <td className="px-4 py-3 text-sm text-cream/80">{index + 1}</td>
                   <td className="px-4 py-3 text-sm text-cream">{attendee.name}</td>
                   <td className="px-4 py-3">
@@ -468,5 +468,7 @@ export default function AdminDashboardPage() {
     </main>
   )
 }
+
+
 
 
