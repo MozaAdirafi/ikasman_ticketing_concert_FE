@@ -141,7 +141,7 @@ export function MinimalTicketCard({ ticket, quantity, onQuantityChange }: Minima
             value={quantity}
             onChange={(e) => onQuantityChange(Number(e.target.value))}
             disabled={soldOut}
-            className="text-white text-[16px] md:text-[15px] font-medium rounded focus:outline-none transition-colors cursor-pointer appearance-none disabled:opacity-60 disabled:cursor-not-allowed h-12"
+            className="text-white text-[13px] md:text-[15px] font-medium rounded focus:outline-none transition-colors cursor-pointer appearance-none disabled:opacity-60 disabled:cursor-not-allowed h-12"
             style={{
               background: '#162236',
               border: `1px solid ${config.dropdownBorderColor}`,
