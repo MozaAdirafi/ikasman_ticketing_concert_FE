@@ -222,6 +222,37 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Map section */}
+      <section className="w-full" style={{ background: '#0F1729' }}>
+        <div className="px-4 py-8 md:px-[60px] md:py-12">
+          <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+            <h3 className="text-white font-600 text-[18px]" style={{ marginBottom: '16px' }}>
+              Lokasi Acara
+            </h3>
+
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.044220427126!2d106.80789817499067!3d-6.257905493730623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f10014486e4d%3A0x7b1fb2e2e51ce912!2sDeheng%20House!5e0!3m2!1sen!2sid!4v1783268518694!5m2!1sen!2sid"
+              width="100%"
+              height="300"
+              className="h-[250px] md:h-[300px]"
+              style={{ border: 0, borderRadius: '8px' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+
+            <a
+              href="https://maps.google.com/?q=Deheng+House,+Jl.+Taman+Kemang+No.32,+Jakarta+Selatan"
+              target="_blank"
+              rel="noreferrer"
+              style={{ color: '#FBBF24', fontSize: '14px', marginTop: '8px', display: 'block' }}
+            >
+              Buka di Google Maps →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Event description */}
       <section className="px-4 pb-12 md:px-6" style={{ paddingTop: 0 }}>
         <div
@@ -294,6 +325,8 @@ export default function LandingPage() {
     </main>
   )
 }
+
+
 
 
 
