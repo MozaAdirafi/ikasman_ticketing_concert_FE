@@ -18,19 +18,19 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Harmoni Untuk Negeri | Tiket Konser',
+  title: 'Kirribilly Road to Liverpool | Tiket Konser',
   description:
-    'Kirribilly Beatles Tribute Band Indonesia hadir dalam konser spesial Harmoni Untuk Negeri. Feat. Cakra Khan & Astrid. 30 Juli 2026, Deheng House Jakarta Selatan.',
+    'Kirribilly Beatles Tribute Band Indonesia hadir dalam konser spesial Road to Liverpool. Feat. Cakra Khan & Astrid. 30 Juli 2026, Deheng House Jakarta Selatan.',
   openGraph: {
-    title: 'Harmoni Untuk Negeri',
+    title: 'Kirribilly - Road to Liverpool',
     description:
       'Konser spesial feat. Cakra Khan & Astrid. Kamis, 30 Juli 2026 · Deheng House, Jakarta Selatan',
     images: [
       {
         url: 'https://ikasman37event.com/concert-banner.jpg',
-        width: 3696,
-        height: 1848,
-        alt: 'Harmoni Untuk Negeri Concert Banner',
+        width: 1200,
+        height: 630,
+        alt: 'Kirribilly Road to Liverpool Concert Banner',
       },
     ],
     url: 'https://ikasman37event.com',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Harmoni Untuk Negeri',
+    title: 'Kirribilly - Road to Liverpool',
     description: 'Konser spesial feat. Cakra Khan & Astrid. 30 Juli 2026',
     images: ['https://ikasman37event.com/concert-banner.jpg'],
   },
