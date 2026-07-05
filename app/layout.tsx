@@ -27,7 +27,7 @@ export const metadata: Metadata = {
       'Konser spesial feat. Cakra Khan & Astrid. Kamis, 30 Juli 2026 · Deheng House, Jakarta Selatan',
     images: [
       {
-        url: 'https://ikasman37event.com/concert-banner.jpg',
+        url: 'https://ikasman37event.com/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Kirribilly Road to Liverpool Concert Banner',
