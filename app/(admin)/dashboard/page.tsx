@@ -132,7 +132,7 @@ function sumTierValues(value: unknown): number {
   if (typeof value === 'number') return value
 
   if (value && typeof value === 'object') {
-    return Object.values(value as Record<string, unknown>).reduce((sum, item) => {
+    return Object.values(value as Record<string, unknown>).reduce<number>((sum, item) => {
       const parsed = Number(item)
       return sum + (Number.isFinite(parsed) ? parsed : 0)
     }, 0)
@@ -468,3 +468,5 @@ export default function AdminDashboardPage() {
     </main>
   )
 }
+
+
