@@ -5,12 +5,13 @@ import { BrowserQRCodeReader } from '@zxing/browser'
 
 interface QRScannerProps {
   onScan: (code: string) => void
-  scanning: boolean
+  scanning?: boolean
 }
 
-export function QRScanner({ onScan, scanning }: QRScannerProps) {
+export function QRScanner({ onScan, scanning = false }: QRScannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const readerRef = useRef<BrowserQRCodeReader | null>(null)
+  const lastScannedRef = useRef<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -23,7 +24,12 @@ export function QRScanner({ onScan, scanning }: QRScannerProps) {
       reader
         .decodeFromVideoDevice(undefined, videoRef.current, (result, err) => {
           if (result && !scanning) {
-            onScan(result.getText())
+            const qrText = result.getText()
+
+            if (lastScannedRef.current === qrText) return
+            lastScannedRef.current = qrText
+
+            onScan(qrText)
           }
         })
         .then((ctrl) => {

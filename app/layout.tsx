@@ -18,8 +18,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Kirribilly Concert — Get Your Ticket',
-  description: 'Secure your spot at the biggest concert of the year.',
+  title: 'Harmoni Untuk Negeri — Get Your Ticket',
+  description: 'Secure your spot at the concert of the year.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

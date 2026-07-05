@@ -86,7 +86,7 @@ export default function LandingPage() {
                 textShadow: '0 2px 8px rgba(0,0,0,0.8)',
               }}
             >
-              Kirribilly
+              Harmoni
             </h1>
             <p
               className="font-display text-[24px] md:text-[40px]"
@@ -98,7 +98,7 @@ export default function LandingPage() {
                 textShadow: '0 2px 8px rgba(0,0,0,0.8)',
               }}
             >
-              Road to Liverpool
+              Untuk Negeri
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -213,8 +213,8 @@ export default function LandingPage() {
               Tentang Acara
             </h3>
             <p style={{ color: '#94A3B8', fontSize: '13px', lineHeight: 1.7 }}>
-              Kirribilly, band tribute Beatles terbaik Indonesia, hadir dalam konser spesial Road to
-              Liverpool. Malam yang penuh harmoni bersama Cakra Khan dan Astrid dalam rangka mendukung
+              Kirribilly, band tribute The Beatles Indonesia, hadir dalam konser spesial Harmoni Untuk Negeri.
+               Malam yang penuh harmoni bersama Cakra Khan dan Astrid dalam rangka mendukung
               perjalanan Kirribilly ke International Beatleweek 2026 di Liverpool, Inggris.
             </p>
           </div>

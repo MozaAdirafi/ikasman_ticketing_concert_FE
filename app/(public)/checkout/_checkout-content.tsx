@@ -11,6 +11,26 @@ export function CheckoutContent() {
   const router = useRouter()
   const params = useSearchParams()
   const orderId = params.get('order_id')
+  const transactionStatus = params.get('transaction_status')
+  const statusCode = params.get('status_code')
+  const redirectStatus = params.get('status')
+
+  const normalizedTransactionStatus = (transactionStatus ?? '').toLowerCase()
+  const isFailedByTransactionStatus = ['cancel', 'deny', 'expire'].includes(normalizedTransactionStatus)
+  const isFailedByRedirectStatus = redirectStatus === 'error' || redirectStatus === 'unfinish'
+  const isNon200StatusCode = statusCode !== null && statusCode !== '200'
+
+  const forceFailedScreen =
+    isFailedByTransactionStatus ||
+    isFailedByRedirectStatus ||
+    isNon200StatusCode
+
+  const shouldPollFromUrl =
+    transactionStatus === null ||
+    ((normalizedTransactionStatus === 'settlement' || normalizedTransactionStatus === 'capture') &&
+      statusCode === '200')
+
+  const shouldPoll = !forceFailedScreen && shouldPollFromUrl
 
   const [order] = useState<OrderResponse | undefined>(() => {
     if (typeof window === 'undefined') return undefined
@@ -25,27 +45,15 @@ export function CheckoutContent() {
       return undefined
     }
   })
-  const { data: payment, isLoading: paymentLoading } = usePaymentStatus(orderId)
 
-  if (!orderId) {
-    return (
-      <main className="min-h-screen bg-navy flex items-center justify-center px-5">
-        <div className="text-center">
-          <p className="text-cream/50 font-ui mb-4">Pesanan tidak ditemukan.</p>
-          <Button variant="ghost" onClick={() => router.push('/')}>
-            Kembali ke beranda
-          </Button>
-        </div>
-      </main>
-    )
-  }
+  const { data: payment, isLoading: paymentLoading } = usePaymentStatus(shouldPoll ? orderId : null)
 
   if (payment?.payment_status === 'paid') {
     return (
       <main className="min-h-screen bg-navy flex flex-col items-center justify-center px-5 animate-success-pulse">
         <div className="text-center max-w-xs">
           <div className="w-16 h-16 border-2 border-gold mx-auto mb-6 flex items-center justify-center">
-            <span className="text-gold text-2xl">✓</span>
+            <span className="text-gold text-2xl">OK</span>
           </div>
           <h1 className="font-display text-2xl font-800 text-cream mb-3">
             Pembayaran berhasil.
@@ -63,19 +71,32 @@ export function CheckoutContent() {
     )
   }
 
-  if (payment?.payment_status === 'failed') {
+  if (forceFailedScreen || payment?.payment_status === 'failed') {
     return (
       <main className="min-h-screen bg-navy flex flex-col items-center justify-center px-5">
         <div className="text-center max-w-xs">
           <div className="w-16 h-16 border-2 border-red-500 mx-auto mb-6 flex items-center justify-center">
-            <span className="text-red-400 text-2xl">✕</span>
+            <span className="text-red-400 text-2xl">X</span>
           </div>
-          <h1 className="font-display text-2xl font-800 text-cream mb-3">
-            Pembayaran gagal.
+          <h1 className="font-display text-2xl font-800 text-red-400 mb-3">
+            Pembayaran Gagal
           </h1>
           <p className="text-cream/60 text-sm mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-            Terjadi kendala saat memproses pembayaran. Tidak ada biaya yang terpotong.
+            Transaksi dibatalkan atau gagal diproses.
           </p>
+          <Button variant="ghost" onClick={() => router.push('/')}>
+            Coba Lagi
+          </Button>
+        </div>
+      </main>
+    )
+  }
+
+  if (!orderId) {
+    return (
+      <main className="min-h-screen bg-navy flex items-center justify-center px-5">
+        <div className="text-center">
+          <p className="text-cream/50 font-ui mb-4">Pesanan tidak ditemukan.</p>
           <Button variant="ghost" onClick={() => router.push('/')}>
             Kembali ke beranda
           </Button>
@@ -100,7 +121,7 @@ export function CheckoutContent() {
         <div className="pt-2 border-t border-cream/10">
           {paymentLoading ? (
             <p className="text-cream/40 text-sm font-ui text-center py-4">
-              Menunggu pembayaran…
+              Memeriksa status pembayaran...
             </p>
           ) : (
             <p className="text-cream/50 text-sm text-center font-ui">
