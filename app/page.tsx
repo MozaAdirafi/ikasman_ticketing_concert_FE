@@ -244,9 +244,7 @@ export default function LandingPage() {
               Tentang Acara
             </h3>
             <p style={{ color: '#94A3B8', fontSize: '15px', lineHeight: 1.7 }}>
-              Kirribilly, band tribute The Beatles Indonesia, hadir dalam konser spesial Harmoni Untuk Negeri.
-              Malam yang penuh harmoni bersama Cakra Khan dan Astrid dalam rangka mendukung
-              perjalanan Kirribilly ke International Beatleweek 2026 di Liverpool, Inggris.
+            Kirribilly, band Indonesia yang menghadirkan karya-karya The Beatles dengan karakter musikalnya sendiri, tampil bersama Cakra Khan dan Astrid dalam konser Harmoni Untuk Negeri sebagai langkah menuju International Beatleweek 2026 di Liverpool, Inggris.
             </p>
           </div>
 
