@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { IconCalendar, IconMapPin, IconUser } from '@tabler/icons-react'
+import { IconCalendar, IconClock, IconMapPin } from '@tabler/icons-react'
 import { useTickets } from '@/hooks/useTickets'
 import { MinimalTicketCard, type CartItem } from '@/components/ticket/MinimalTicketCard'
 import { OrderSummaryBar } from '@/components/ticket/OrderSummaryBar'
@@ -19,38 +19,73 @@ export default function LandingPage() {
 
   function handleQuantityChange(ticket: Ticket, quantity: number) {
     setCart((prevCart) => {
-      // If quantity is 0, remove from cart
       if (quantity === 0) {
         return prevCart.filter((item) => item.ticket.id !== ticket.id)
       }
 
-      // Check if item already in cart
       const existingItem = prevCart.find((item) => item.ticket.id === ticket.id)
 
       if (existingItem) {
-        // Update quantity
         return prevCart.map((item) =>
           item.ticket.id === ticket.id ? { ...item, quantity } : item
         )
-      } else {
-        // Add to cart
-        return [...prevCart, { ticket, quantity }]
       }
+
+      return [...prevCart, { ticket, quantity }]
     })
   }
 
   return (
     <main className="min-h-screen bg-navy flex flex-col pb-32">
-      {/* Hero */}
+      {/* Hero (mobile) */}
+      <section className="md:hidden">
+        <Image
+          src="/concert-banner.jpg"
+          alt="Kirribilly - Road to Liverpool"
+          width={1280}
+          height={720}
+          className="w-full h-auto block object-contain"
+          priority
+        />
+
+        <div style={{ background: '#131929', padding: '20px 16px' }}>
+          <h1 className="font-display text-white text-[22px] font-700 leading-tight">
+            Kirribilly - Road to Liverpool
+          </h1>
+          <p className="mt-1 text-[14px] font-600" style={{ color: '#FBBF24' }}>
+            Feat. Cakra Khan & Astrid
+          </p>
+
+          <div style={{ borderTop: '1px solid #1e2640', margin: '12px 0' }} />
+
+          <div className="flex flex-col" style={{ gap: '12px' }}>
+            <div className="flex items-center" style={{ gap: '10px' }}>
+              <IconCalendar size={18} color="#FBBF24" strokeWidth={1.9} />
+              <span className="text-white text-[16px]">Kamis, 30 Juli 2026</span>
+            </div>
+            <div className="flex items-center" style={{ gap: '10px' }}>
+              <IconClock size={18} color="#FBBF24" strokeWidth={1.9} />
+              <span style={{ color: '#94A3B8', fontSize: '15px' }}>19:30 - 22:00 WIB</span>
+            </div>
+            <div className="flex items-center" style={{ gap: '10px' }}>
+              <IconMapPin size={18} color="#FBBF24" strokeWidth={1.9} />
+              <span style={{ color: '#94A3B8', fontSize: '15px' }}>
+                Deheng House, Jl. Taman Kemang No.32, Jakarta Selatan
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Hero (desktop) */}
       <section
-        className="relative overflow-hidden"
+        className="relative overflow-hidden hidden md:block"
         style={{
           backgroundImage: "url('/concert-banner.jpg')",
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
         }}
       >
-        {/* Blur + dark overlay — blurs only the background, not the content */}
         <div
           className="absolute inset-0"
           style={{
@@ -59,9 +94,7 @@ export default function LandingPage() {
           }}
         />
 
-        {/* Content row */}
         <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-10 px-5 py-6 md:p-10">
-          {/* LEFT — event info */}
           <div className="flex-1 min-w-0 md:pr-10">
             <p
               style={{
@@ -102,22 +135,21 @@ export default function LandingPage() {
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <div className="flex items-start gap-3 text-[13px] md:text-[15px]" style={{ color: '#CBD5E1' }}>
+              <div className="flex items-start gap-3 text-[13px] md:text-[16px]" style={{ color: '#CBD5E1' }}>
                 <IconCalendar size={16} strokeWidth={1.6} style={{ flexShrink: 0 }} />
-                <span>Kamis, 30 Juli 2026 · 19:30 – 22:00 WIB</span>
+                <span>Kamis, 30 Juli 2026 - 19:30 - 22:00 WIB</span>
               </div>
-              <div className="flex items-start gap-3 text-[13px] md:text-[15px]" style={{ color: '#CBD5E1' }}>
+              <div className="flex items-start gap-3 text-[13px] md:text-[16px]" style={{ color: '#CBD5E1' }}>
                 <IconMapPin size={16} strokeWidth={1.6} style={{ flexShrink: 0 }} />
                 <span>Deheng House, Jl. Taman Kemang No.32, Jakarta Selatan</span>
               </div>
-              <div className="flex items-start gap-3 text-[13px] md:text-[15px]" style={{ color: '#CBD5E1' }}>
-                <IconUser size={16} strokeWidth={1.6} style={{ flexShrink: 0 }} />
+              <div className="flex items-start gap-3 text-[13px] md:text-[16px]" style={{ color: '#CBD5E1' }}>
+                <IconClock size={16} strokeWidth={1.6} style={{ flexShrink: 0 }} />
                 <span>Feat. Cakra Khan & Astrid</span>
               </div>
             </div>
           </div>
 
-          {/* RIGHT — poster image */}
           <div className="hidden md:block" style={{ width: '420px', flexShrink: 0 }}>
             <div style={{ cursor: 'pointer' }} onClick={() => setShowPoster(true)}>
               <div
@@ -130,7 +162,7 @@ export default function LandingPage() {
               >
                 <Image
                   src="/concert-banner.jpg"
-                  alt="Kirribilly – Road to Liverpool"
+                  alt="Kirribilly - Road to Liverpool"
                   width={420}
                   height={300}
                   style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain', objectPosition: 'center center' }}
@@ -150,7 +182,7 @@ export default function LandingPage() {
       <section className="w-full px-4 py-6 md:px-6 md:py-12">
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <div style={{ marginBottom: '24px' }}>
-            <h2 className="font-display text-white font-semibold" style={{ fontSize: '18px' }}>Pilih Tiket</h2>
+            <h2 className="font-display text-white text-[22px] font-700">Pilih Tiket</h2>
           </div>
 
           {isLoading ? (
@@ -164,7 +196,7 @@ export default function LandingPage() {
             </div>
           ) : error ? (
             <div className="border border-red-500/30 bg-red-950/20 rounded-lg p-8 text-center">
-              <p className="text-red-400 font-ui">Gagal memuat tiket. Silakan muat ulang halaman.</p>
+              <p className="text-red-400 text-[15px] font-ui">Gagal memuat tiket. Silakan muat ulang halaman.</p>
             </div>
           ) : tickets && tickets.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -184,7 +216,7 @@ export default function LandingPage() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <p className="text-gray-400 font-ui">Tiket belum tersedia</p>
+              <p className="text-gray-400 text-[15px] font-ui">Tiket belum tersedia</p>
             </div>
           )}
         </div>
@@ -204,7 +236,6 @@ export default function LandingPage() {
           }}
           className="md:[grid-template-columns:1fr_1fr]"
         >
-          {/* Left: about */}
           <div>
             <h3
               className="font-display"
@@ -212,14 +243,13 @@ export default function LandingPage() {
             >
               Tentang Acara
             </h3>
-            <p style={{ color: '#94A3B8', fontSize: '13px', lineHeight: 1.7 }}>
+            <p style={{ color: '#94A3B8', fontSize: '15px', lineHeight: 1.7 }}>
               Kirribilly, band tribute The Beatles Indonesia, hadir dalam konser spesial Harmoni Untuk Negeri.
-               Malam yang penuh harmoni bersama Cakra Khan dan Astrid dalam rangka mendukung
+              Malam yang penuh harmoni bersama Cakra Khan dan Astrid dalam rangka mendukung
               perjalanan Kirribilly ke International Beatleweek 2026 di Liverpool, Inggris.
             </p>
           </div>
 
-          {/* Right: detail rows */}
           <div>
             <h3
               className="font-display"
@@ -230,13 +260,13 @@ export default function LandingPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {([
                 { label: 'Tanggal', value: 'Kamis, 30 Juli 2026' },
-                { label: 'Waktu',   value: '19:30 – 22:00 WIB' },
-                { label: 'Tempat',  value: 'Deheng House' },
-                { label: 'Alamat',  value: 'Jl. Taman Kemang No.32, Jakarta Selatan' },
+                { label: 'Waktu', value: '19:30 - 22:00 WIB' },
+                { label: 'Tempat', value: 'Deheng House' },
+                { label: 'Alamat', value: 'Jl. Taman Kemang No.32, Jakarta Selatan' },
               ] as { label: string; value: string }[]).map(({ label, value }) => (
                 <div key={label} style={{ display: 'flex', gap: '12px' }}>
-                  <span style={{ color: '#94A3B8', fontSize: '12px', width: '60px', flexShrink: 0 }}>{label}</span>
-                  <span style={{ color: '#ffffff', fontSize: '13px' }}>{value}</span>
+                  <span style={{ color: '#94A3B8', fontSize: '15px', width: '60px', flexShrink: 0 }}>{label}</span>
+                  <span style={{ color: '#ffffff', fontSize: '15px' }}>{value}</span>
                 </div>
               ))}
             </div>
@@ -244,7 +274,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Poster lightbox */}
       {showPoster && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center"
@@ -261,14 +290,13 @@ export default function LandingPage() {
         </div>
       )}
 
-      {/* Order summary bar (sticky) */}
       <OrderSummaryBar items={cart} onViewDetail={() => setShowDetailModal(true)} />
-
-      {/* Order detail modal */}
       <OrderDetailModal items={cart} isOpen={showDetailModal} onClose={() => setShowDetailModal(false)} />
-
-      {/* Toast notification */}
       {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
     </main>
   )
 }
+
+
+
+

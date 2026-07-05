@@ -2,7 +2,6 @@
 
 import type { Ticket } from '@/types'
 
-// ---- tier config ----
 type TierConfig = {
   borderColor: string
   badgeBg: string
@@ -78,30 +77,28 @@ export function MinimalTicketCard({ ticket, quantity, onQuantityChange }: Minima
 
   return (
     <div
-      className="w-full rounded-lg border border-white/10 bg-[#131929] hover:bg-[#1a2235] transition-colors duration-200"
-      style={{ borderLeft: `3px solid ${config.borderColor}`, minHeight: '80px' }}
+      className="w-full rounded-lg border border-white/10 bg-[#131929] hover:bg-[#1a2235] transition-colors duration-200 border-l-4 md:border-l-[3px]"
+      style={{ borderLeftColor: config.borderColor, minHeight: '90px' }}
     >
-      <div style={{ display: 'flex', alignItems: 'stretch', minHeight: '80px' }}>
-
-        {/* LEFT: badge + price */}
-        <div className="flex-1 px-4 py-4 md:py-5 md:pl-6 md:pr-0 flex flex-col justify-center gap-2">
+      <div style={{ display: 'flex', alignItems: 'stretch', minHeight: '90px' }}>
+        <div className="flex-1 px-4 py-5 md:px-6 md:py-6 flex flex-col justify-center gap-2">
           <span
-            className="text-xs font-bold uppercase tracking-wide w-fit rounded"
+            className="text-[13px] md:text-[12px] font-bold uppercase w-fit rounded"
             style={{
+              letterSpacing: '0.08em',
               background: config.badgeBg,
               color: config.badgeColor,
               border: config.badgeBorder,
-              padding: '2px 10px',
+              padding: '3px 10px',
             }}
           >
             {ticket.name.toUpperCase()}
           </span>
-          <p className="text-white font-bold leading-tight text-[20px] md:text-[22px]">
+          <p className="text-white font-800 leading-tight text-[26px]">
             {formatPrice(ticket.price)}
           </p>
         </div>
 
-        {/* Ticket tear-off divider with semicircle cutouts */}
         <div
           className="mx-3 md:mx-6"
           style={{
@@ -111,37 +108,40 @@ export function MinimalTicketCard({ ticket, quantity, onQuantityChange }: Minima
             flexShrink: 0,
           }}
         >
-          <div style={{
-            position: 'absolute',
-            top: '-1px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '16px',
-            height: '8px',
-            borderRadius: '0 0 8px 8px',
-            background: '#0F1729',
-            zIndex: 2,
-          }} />
-          <div style={{
-            position: 'absolute',
-            bottom: '-1px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '16px',
-            height: '8px',
-            borderRadius: '8px 8px 0 0',
-            background: '#0F1729',
-            zIndex: 2,
-          }} />
+          <div
+            style={{
+              position: 'absolute',
+              top: '-1px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '16px',
+              height: '8px',
+              borderRadius: '0 0 8px 8px',
+              background: '#0F1729',
+              zIndex: 2,
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-1px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '16px',
+              height: '8px',
+              borderRadius: '8px 8px 0 0',
+              background: '#0F1729',
+              zIndex: 2,
+            }}
+          />
         </div>
 
-        {/* RIGHT: dropdown */}
-        <div className="w-[132px] md:w-[160px] pr-4 py-4 md:pr-6 md:py-5 flex items-center justify-center">
+        <div className="w-[132px] md:w-[160px] pr-4 py-5 md:pr-6 md:py-6 flex items-center justify-center">
           <select
             value={quantity}
             onChange={(e) => onQuantityChange(Number(e.target.value))}
             disabled={soldOut}
-            className="text-white text-xs md:text-sm font-medium rounded focus:outline-none transition-colors cursor-pointer appearance-none disabled:opacity-60 disabled:cursor-not-allowed"
+            className="text-white text-[16px] md:text-[15px] font-medium rounded focus:outline-none transition-colors cursor-pointer appearance-none disabled:opacity-60 disabled:cursor-not-allowed h-12"
             style={{
               background: '#162236',
               border: `1px solid ${config.dropdownBorderColor}`,
@@ -158,7 +158,6 @@ export function MinimalTicketCard({ ticket, quantity, onQuantityChange }: Minima
             ))}
           </select>
         </div>
-
       </div>
     </div>
   )
